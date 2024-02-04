@@ -34,7 +34,7 @@ class NeuralNetwork:
         for i in range(1, len(layers) - 1):
             r = 2*np.random.random((layers[i-1] + 1, layers[i] + 1)) -1
             self.weights.append(r)
-        # asigno aleatorios a capa de salida
+        # asignacion de calores aleatorios de salida
         r = 2*np.random.random( (layers[i] + 1, layers[i+1])) - 1
         self.weights.append(r)
 
@@ -51,7 +51,7 @@ class NeuralNetwork:
                     dot_value = np.dot(a[l], self.weights[l])
                     activation = self.activation(dot_value)
                     a.append(activation)
-            # Calculo la diferencia en la capa de salida y el valor obtenido
+            #calcular diferencia de capa de salida y valor obtenido
             error = y[i] - a[-1]
             deltas = [error * self.activation_prime(a[-1])]
             
