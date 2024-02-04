@@ -1,5 +1,5 @@
 import numpy as np #importa la lib numpy
-import matplotlib.pyplot as plt #importar la biblioteca matplotlib.pyplot como plt
+import matplotlib.pyplot as plt #importando la biblioteca matplotlib.pyplot como plt
 
 
 def sigmoid(x): #funcion de activacion sigmoidal
@@ -135,10 +135,10 @@ plt.plot(range(len(valores)), valores, color='b')
 # estableciendo el límite del eje y entre 0 y 1
 plt.ylim([0, 1])
 
-#etiquetando el eje y como 'Costo'
+#etiquetando el eje y como costo 
 plt.ylabel('Cost')
 
-#etiqueta el eje x como 'Epochs' (épocas)
+#etiqueta el eje x como 'Epochs' epocas
 plt.xlabel('Epochs')
 
 #ajusta automáticamente el diseño para que no haya superposición de elementos
