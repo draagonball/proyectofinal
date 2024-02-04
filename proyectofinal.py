@@ -1,26 +1,26 @@
 import numpy as np #importa la lib numpy
-import matplotlib.pyplot as plt #importando la biblioteca matplotlib.pyplot como plt
+import matplotlib.pyplot as plt #importar la biblioteca matplotlib.pyplot como plt
 
 
-def sigmoid(x): #funcion de activacion sigmoidal
+def sigmoide(x): #funcion de activacion sigmoideal
     return 1.0/(1.0 + np.exp(-x))
 
-def sigmoid_derivada(x): #deriva de la funcion de activacion sigmoidal
-    return sigmoid(x)*(1.0-sigmoid(x))
+def sigmoide_derivada(x): #deriva de la funcion de activacion sigmoideal
+    return sigmoide(x)*(1.0-sigmoide(x))
 
-def tanh(x): #funcion de activacion tangente hiperbbolica
+def tanh(x): #funcion de activacion tanh hiperbbolica
     return np.tanh(x)
 
-def tanh_derivada(x): #se deriva de la funcion de activacion tangente hiperbolica
+def tanh_derivada(x): #se deriva de la funcion de activacion tanh hiperbolica
     return 1.0 - x**2
 
 
 class NeuralNetwork:
 
     def __init__(self, layers, activation='tanh'):
-        if activation == 'sigmoid':
-            self.activation = sigmoid
-            self.activation_prime = sigmoid_derivada
+        if activation == 'sigmoide':
+            self.activation = sigmoide
+            self.activation_prime = sigmoide_derivada
         elif activation == 'tanh':
             self.activation = tanh
             self.activation_prime = tanh_derivada
@@ -38,13 +38,12 @@ class NeuralNetwork:
         r = 2*np.random.random( (layers[i] + 1, layers[i+1])) - 1
         self.weights.append(r)
 
-    def fit(self, X, y, learning_rate=0.2, epochs=100000):
-        # Agrego columna de unos a las entradas X
-        # Con esto agregamos la unidad de Bias a la capa de entrada
+    def fit(self, X, y, learning_rate=0.2, epocas=100000):
+        # agregando columna de unos a las entradas X
         ones = np.atleast_2d(np.ones(X.shape[0]))
         X = np.concatenate((ones.T, X), axis=1)
         
-        for k in range(epochs):
+        for k in range(epocas):
             i = np.random.randint(X.shape[0])
             a = [X[i]]
 
@@ -67,15 +66,14 @@ class NeuralNetwork:
             deltas.reverse()
 
             # backpropagation
-            # 1. Multiplcar los delta de salida con las activaciones de entrada 
-            #    para obtener el gradiente del peso.
-            # 2. actualizo el peso restandole un porcentaje del gradiente
+            # multiplica los delta de salida con las activaciones de entrada para obtener el gradiente del peso.
+            #actualiza el peso restandole un porcentaje del gradiente
             for i in range(len(self.weights)):
                 layer = np.atleast_2d(a[i])
                 delta = np.atleast_2d(deltas[i])
                 self.weights[i] += learning_rate * layer.T.dot(delta)
 
-            if k % 10000 == 0: print('epochs:', k)
+            if k % 10000 == 0: print('epocas:', k)
 
     def predict(self, x): #este metodo hace predicciones con la red neuronal
         ones = np.atleast_2d(np.ones(x.shape[0])) #asegurarse de que x tenga 2 dimensiones
@@ -85,7 +83,7 @@ class NeuralNetwork:
         return a #devuelve la saida que arroja la red
 
     def print_weights(self): #imprime los pesos de la conex en la red
-        print("LISTADO PESOS DE CONEXIONES")
+        print("Lista pesos de las conexiones")
         for i in range(len(self.weights)):
             print(self.weights[i])
 
@@ -109,7 +107,7 @@ y = np.array([[0,1],    # avanzar
               [1,1],    # giro derecha
               [0,-1],   # retroceder
               [0,-1]])  # retroceder
-nn.fit(X, y, learning_rate=0.03,epochs=15001)
+nn.fit(X, y, learning_rate=0.03,epocas=15001)
 
  #------------------------- 
 
@@ -123,23 +121,23 @@ for e in X:
 deltas = nn.get_deltas()
 valores=[]
 index=0
-for arreglo in deltas:
-    valores.append(arreglo[1][0] + arreglo[1][1])
+for array1 in deltas:
+    valores.append(array1[1][0] + array1[1][1])
     index=index+1
 
 # crear un gráfico de línea con valores en el eje y y el rango de épocas en el eje x
 # len(valores) devuelve la longitud de la lista 'valores', y range(len(valores)) crea el rango de índices para el eje x
-# el color de la línea se establece en azul ('b')
-plt.plot(range(len(valores)), valores, color='b')
+# el color de la línea se establece en rojo ('r')
+plt.plot(range(len(valores)), valores, color='r')
 
 # estableciendo el límite del eje y entre 0 y 1
 plt.ylim([0, 1])
 
-#etiquetando el eje y como costo 
-plt.ylabel('Cost')
+#etiquetando el eje y como 'Costo'
+plt.ylabel('Costos')
 
-#etiqueta el eje x como 'Epochs' epocas
-plt.xlabel('Epochs')
+#etiqueta el eje x como 'epocas' (épocas)
+plt.xlabel('Epocas')
 
 #ajusta automáticamente el diseño para que no haya superposición de elementos
 plt.tight_layout()
