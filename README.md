@@ -1,6 +1,6 @@
 # proyectofinal
 
-
+Hola, gracias por clickear el link en mi documento 
 Aquí esta es el proyecto basado en redes neuronales y movilidad de vehículos, espero tu calificación. 
 
 Lo puedes correr en tu IDE de preferencia. 
